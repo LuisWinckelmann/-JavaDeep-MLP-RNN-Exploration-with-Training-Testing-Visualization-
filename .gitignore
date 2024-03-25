@@ -10,3 +10,4 @@ out/
 
 # GFX
 /gfx/MLPGeometry/*
+/gfx/RNNTrajectory/*
