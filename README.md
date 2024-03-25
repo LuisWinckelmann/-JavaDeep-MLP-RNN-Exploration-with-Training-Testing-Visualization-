@@ -46,8 +46,12 @@ provided.
 |Visualization of the MLP each 5 training epochs | Fully trained RNN after 25k training epochs |
 |:-------------------------:|:-------------------------:|
 |[![Example Visualization of the MLP][product-screenshot]](gfx/MLPGeometry_small.gif) | [![Example Visualization of the RNN][product-screenshot2]](gfx/RNNTrajectory_small.gif) |
-|The problem simulated is a non-linear classification problem. Over time the MLP learns to separate the background (Class 1) from the 2 visible circles (Class 2)| The problem simulated is a simulated movement in form of a spiral. The fully trained RNN is able to quickly close the gap to the spiral and somewhat predict it's path|
 
+Corresponding to:
+
+| Binary Classification    | Past-dependent spiral movement|
+|:-------------------------|:-------------------------|
+|The problem simulated is a non-linear classification problem. Over time the MLP learns to separate the background (Class 1) from the 2 visible circles (Class 2). Each 5 epochs the model predictions for Class 2 are highlighted in blue. | The problem simulated is a past-dependent movement in form of a spiral. The fully trained RNN is able to quickly close the gap to the spiral and predict it's future path based on the previous movement.|
 
 
 ## Getting Started
