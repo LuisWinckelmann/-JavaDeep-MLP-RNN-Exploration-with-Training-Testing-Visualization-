@@ -66,13 +66,13 @@ Clone the repo
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Move project from private to public
-- [ ] Create README
-    - [ ] Description
-    - [ ] Installation/Setup
-    - [ ] Example Usage & Create/Render Example Gif
-    
-
+- [x] Move project from private to public
+- [x] Finalize README
+    - [x] Description
+    - [x] Installation/Setup
+    - [x] Example Usage & Create/Render Example Gif
+- [ ] Test if cloning and executing the repository from scratch works
+  
 <!-- LICENSE -->
 ## License
 Distributed under the MIT License. See `LICENSE.txt` for more information.
