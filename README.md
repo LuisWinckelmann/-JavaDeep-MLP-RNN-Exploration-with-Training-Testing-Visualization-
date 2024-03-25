@@ -51,7 +51,7 @@ Corresponding to:
 
 | Binary Classification    | Past-dependent spiral movement|
 |:-------------------------|:-------------------------|
-|The problem simulated is a non-linear classification problem. Over time the MLP learns to separate the background (Class 1) from the 2 visible circles (Class 2). Each 5 epochs the model predictions for Class 2 are highlighted in blue. | The problem simulated is a past-dependent movement in form of a spiral. The fully trained RNN is able to quickly close the gap to the spiral and predict it's future path based on the previous movement.|
+|The problem simulated is a non-linear classification problem. Over time the MLP learns to separate the background (Class 1, black) from the 2 visible circles (Class 2, white). The model predictions for Class 2 are highlighted in blue every 5 epochs. | The problem simulated is a past-dependent movement in form of a spiral. The fully trained RNN is able to quickly close the gap to the spiral and predict it's future path based on the previous movement. Orange corresponds to the predictions and blue corresponds to the ground truth spiral.|
 
 
 ## Getting Started
