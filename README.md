@@ -3,7 +3,7 @@
 <a name="readme-top"></a>
 
 
-<h3 align="center">JavaDeep: MLP & RNN implementation from scratch in Java</h3>
+<h1 align="center">JavaDeep: MLP & RNN implementation from scratch in Java</h1>
 
   <p align="center">
     A project exploring Multilayer Perceptrons (MLP) and Recurrent Neural Networks (RNN) with implementations from scratch in Java.
