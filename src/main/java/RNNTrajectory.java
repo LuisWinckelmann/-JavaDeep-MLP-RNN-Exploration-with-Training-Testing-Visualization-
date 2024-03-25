@@ -1,29 +1,23 @@
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.Stroke;
+import misc.BasicLearningListener;
+import misc.Spiral;
+import misc.TrajectoryGenerator;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.io.Serial;
 import java.util.Random;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.Timer;
-
-import misc.BasicLearningListener;
-import misc.Spiral;
-import misc.TrajectoryGenerator;
 
 public class RNNTrajectory {
     
-    private static Random rnd = new Random(100L);
+    private static final Random rnd = new Random(100L);
 
     public static double[][] generateTrajectory(
         final TrajectoryGenerator gen,
@@ -37,10 +31,9 @@ public class RNNTrajectory {
         return result;
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         final TrajectoryGenerator gen = new Spiral();
-        final int trainlength         = 100;
-
+        final int trainlength  = 200; // 100 originally
         final double[][] trainseq = generateTrajectory(
             gen, trainlength
         );
@@ -50,19 +43,20 @@ public class RNNTrajectory {
         inputs[0][0][0] = 1.0;
         // set up network. biases are used by default, but can be deactivated using net.setBias(layer, false),
         // where layer gives the layer index (1 = is the first hidden layer).
-        // final RecurrentNeuralNetwork net = new RecurrentNeuralNetwork(1, 100, 100, 2);
-        final RecurrentNeuralNetwork net = new RecurrentNeuralNetwork(1, 150,150, 2);
+        // works:
+        // final RecurrentNeuralNetwork net = new RecurrentNeuralNetwork(1, 150,150, 2);
+        final RecurrentNeuralNetwork net = new RecurrentNeuralNetwork(1, 250,250, 2);
         // we disable all biases to test if the implementation really works and isn't solved purely by the bias
         boolean flag = false;
         net.setBias(1, flag);
         net.setBias(2, flag);
         net.setBias(3, flag);
+        // Flag to save visualizations to file
+        final boolean save_vis  = false;
         // perform training.
-        final int epochs = 25000;
-        //final double learningrate = 0.0005;
-        final double learningrate = 0.00001;
-        //final double momentumrate = 0.95;
-        final double momentumrate = 0.7;
+        final int epochs = 25000; //
+        final double learningrate = 0.000005; //
+        final double momentumrate = 0.9; //
         // generate initial weights and prepare the RNN buffer for BPTT over the required number of time steps.
         net.initializeWeights(rnd, 0.1);
         net.rebufferOnDemand(trainlength);
@@ -94,6 +88,7 @@ public class RNNTrajectory {
         imggfx.setStroke(stroke);
         imggfx.setBackground(Color.WHITE);
         final JPanel canvas = new JPanel(){
+            @Serial
             private static final long serialVersionUID = -5927396264951085674L;
             @Override
             protected void paintComponent(Graphics gfx) {
@@ -189,6 +184,13 @@ public class RNNTrajectory {
                     timestep[0]++;
                 }
                 canvas.repaint();
+                if (save_vis){
+                    try {
+                        ImageIO.write(img,"png", new File("./gfx/RNNTrajectory/" + timestep[timestep.length - 1] + ".png" ));
+                    } catch (IOException x) {
+                        x.printStackTrace();
+                    }
+                }
             }
         });
         timer.start();
