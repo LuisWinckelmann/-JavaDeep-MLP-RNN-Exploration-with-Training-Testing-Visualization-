@@ -13,17 +13,17 @@ public class RecurrentNeuralNetwork {
     
     public final static double BIAS = 1.0;
     
-    private int layersnum;
-    private int inputsize;
-    private int weightsnum;
-    private int[] layer;
-    private double[][][] net;
-    private double[][][] act;
-    private double[][][] bwbuffer;
-    private double[][][] delta;
-    private double[][][][] weights;
-    private boolean[] usebias;
-    private double[][][][] dweights;
+    private final int layersnum;
+    private final int inputsize;
+    private final int weightsnum;
+    private final int[] layer;
+    private final double[][][] net;
+    private final double[][][] act;
+    private final double[][][] bwbuffer;
+    private final double[][][] delta;
+    private final double[][][][] weights;
+    private final boolean[] usebias;
+    private final double[][][][] dweights;
     
     private int bufferlength    = 0;
     private int lastinputlength = 0;
@@ -32,9 +32,7 @@ public class RecurrentNeuralNetwork {
         final int[] result = new int[2 + in.length];
         result[0] = i1;
         result[1] = i2;
-        for (int i = 0; i < in.length; i++) {
-            result[i + 2] = in[i];
-        }
+        System.arraycopy(in, 0, result, 2, in.length);
         return result;
     }
     public double[][][] getAct() { return this.act; }
@@ -266,11 +264,8 @@ public class RecurrentNeuralNetwork {
             }
 
             for (int l = this.layersnum-2; l >= 0; l--) {      // iteration over all layers (starting from the last one)
-                final int layersize    = this.layer[l];
-                int prelayersize = 0;
-                if(l==0){
-                    prelayersize = this.layer[1];
-                }
+                final int layersize = this.layer[l];
+                int prelayersize;
                 if(l>0) {
                     //Outer derivative, Hidden-Layer:
                     final double[][] ff_weights = this.weights[l][l+1];
@@ -331,9 +326,8 @@ public class RecurrentNeuralNetwork {
      * @param rnd Instance of Random.
      */
     public void initializeWeights(final Random rnd, final double stddev) {
-        for (int l1 = 0; l1 < this.weights.length; l1++) {
-            for (int l2 = 0; l2 < this.weights[l1].length; l2++) {
-                double[][] wll = this.weights[l1][l2];
+        for (double[][][] weight : this.weights) {
+            for (double[][] wll : weight) {
                 if (wll != null) {
                     for (int i = 0; i < wll.length; i++) {
                         for (int j = 0; j < wll[i].length; j++) {
@@ -351,9 +345,8 @@ public class RecurrentNeuralNetwork {
 
     private static void map(final double[] from, final double[][][][] to) {
         int idx = 0;
-        for (int l1 = 0; l1 < to.length; l1++) {
-            for (int l2 = 0; l2 < to[l1].length; l2++) {
-                double[][] wll = to[l1][l2];
+        for (double[][][] doubles : to) {
+            for (double[][] wll : doubles) {
                 if (wll != null) {
                     for (int i = 0; i < wll.length; i++) {
                         for (int j = 0; j < wll[i].length; j++) {
@@ -367,13 +360,12 @@ public class RecurrentNeuralNetwork {
 
     private static void map(final double[][][][] from, final double[] to) {
         int idx = 0;
-        for (int l1 = 0; l1 < from.length; l1++) {
-            for (int l2 = 0; l2 < from[l1].length; l2++) {
-                double[][] wll = from[l1][l2];
+        for (double[][][] doubles : from) {
+            for (double[][] wll : doubles) {
                 if (wll != null) {
-                    for (int i = 0; i < wll.length; i++) {
-                        for (int j = 0; j < wll[i].length; j++) {
-                            to[idx++] = wll[i][j];
+                    for (double[] value : wll) {
+                        for (double v : value) {
+                            to[idx++] = v;
                         }
                     }
                 }
@@ -407,7 +399,7 @@ public class RecurrentNeuralNetwork {
     public double trainStochastic(
         final Random rnd, 
         final double[][][] input, 
-        final double target[][][],
+        final double[][][] target,
         final double epochs,
         final double learningrate,
         final double momentumrate,
@@ -426,7 +418,8 @@ public class RecurrentNeuralNetwork {
         }
         double error = Double.POSITIVE_INFINITY;
         // epoch loop.
-        double lr = learningrate;
+        double lr;
+        lr = learningrate;
         for (int i = 0; i < epochs; i++) {
             // shuffle indices.
             Tools.shuffle(indices, rnd);
@@ -451,9 +444,7 @@ public class RecurrentNeuralNetwork {
             }
             error = errorsum / (double)(input.length);
             if (listener != null & i%1000 == 0) listener.afterEpoch(i + 1, error);
-            for (int k = 0; k < this.weightsnum; k++){
-                weightsupdate[k] = dweights[k];
-            }
+            if (this.weightsnum >= 0) System.arraycopy(dweights, 0, weightsupdate, 0, this.weightsnum);
         }
         return error;
     }

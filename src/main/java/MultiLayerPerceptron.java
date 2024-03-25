@@ -11,17 +11,17 @@ public class MultiLayerPerceptron {
     
     public final static double BIAS = 1.0;
     
-    private int layersnum;
-    private int inputsize;
-    private int weightsnum;
-    private int[] layer;
-    private double[][] net;
-    private double[][] act;
-    private double[][] bwbuffer;
-    private double[][] delta;
-    private double[][][] weights;
-    private boolean[] usebias;
-    private double[][][] dweights;
+    private final int layersnum;
+    private final int inputsize;
+    private final int weightsnum;
+    private final int[] layer;
+    private final double[][] net;
+    private final double[][] act;
+    private final double[][] bwbuffer;
+    private final double[][] delta;
+    private final double[][][] weights;
+    private final boolean[] usebias;
+    private final double[][][] dweights;
     
     private static int[] join(final int i1, final int i2, final int ...in) {
         final int[] result = new int[2 + in.length];
@@ -29,9 +29,7 @@ public class MultiLayerPerceptron {
         result[0] = i1;
         result[1] = i2;
         //
-        for (int i = 0; i < in.length; i++) {
-            result[i + 2] = in[i];
-        }
+        System.arraycopy(in, 0, result, 2, in.length);
         //
         return result;
     }
@@ -142,9 +140,7 @@ public class MultiLayerPerceptron {
         //
         // store input.
         //
-        for (int i = 0; i < input.length; i++) {
-            this.act[0][i] = input[i];
-        }
+        System.arraycopy(input, 0, this.act[0], 0, input.length);
         //
         // compute output layer-wise. start with the first
         // hidden layer (or the outputlayer if there is no
@@ -306,44 +302,32 @@ public class MultiLayerPerceptron {
     public double trainStochastic(
         final Random rnd, 
         final double[][] input, 
-        final double target[][],
+        final double[][] target,
         final double epochs,
         final double learningrate,
         final double momentumrate,
         final LearningListener listener
     ) {
-        //
         assert(input.length == target.length);
-        //
+
         final double[] weights           = new double[this.weightsnum];
         final double[] dweights          = new double[this.weightsnum];
         final double[] weightsupdate     = new double[this.weightsnum];
-        //
+
         this.readWeights(weights);
-        //
         // create initial index permutation.
-        //
         final int[] indices = new int[input.length];
         for (int i = 0; i < indices.length; i++) {
             indices[i] = i;
         }
-        //
         double error = Double.POSITIVE_INFINITY;
-        //
         // epoch loop.
-        //
         for (int i = 0; i < epochs; i++) {
-            //
             // shuffle indices.
-            //
             Tools.shuffle(indices, rnd);
-            //
             double errorsum = 0.0;
-            //
-            // train all samples in online manner, i.e. iterate over all samples
-            // while considering the shuffled order and update the weights 
-            // immediately after each sample
-            //
+            // train all samples in online manner, i.e. iterate over all samples while considering the shuffled order
+            // and update the weights immediately after each sample
 
             for (int k = 0; k < this.weightsnum; k++){
                 weightsupdate[k] = 0;
@@ -357,28 +341,14 @@ public class MultiLayerPerceptron {
                 this.readDWeights(dweights);
 
                 for (int k = 0; k < this.weightsnum; k++){
-                    //System.out.println(this.weightsnum);
-                    //System.out.println(k);
-                    //System.out.println(weights.length);
-                    //System.out.println(weightsupdate);
-                    //System.out.println(weights.length);
-                    //System.out.println(weights[k]);
                     weights[k] += - learningrate * dweights[k] + momentumrate * weightsupdate[k];
-                    //System.out.println( weights[k]);
-                    //System.out.println("---------------------------------------------------------------");
                 }
-                //System.out.println(dweights[0]);
                 this.writeWeights(weights);
-
             }
             error = errorsum / (double)(input.length);
             if (listener != null) listener.afterEpoch(i + 1, error);
-            for (int k = 0; k < this.weightsnum; k++){
-                weightsupdate[k] = dweights[k];
-            }
-
+            if (this.weightsnum >= 0) System.arraycopy(dweights, 0, weightsupdate, 0, this.weightsnum);
         }
-        //
         return error;
     }
     
@@ -390,20 +360,15 @@ public class MultiLayerPerceptron {
      * @return RMSE value.
      */
     public static double RMSE(final double[] output, final double[] target) {
-        //
         assert(output.length > 0);
         assert(target.length > 0);
         assert(target.length == output.length);
-        //
+
         double error = 0;
-        //
         for (int i = 0; i < target.length; i++) {
             final double e = output[i] - target[i];
             error += (e * e);
         }
-        //
         return Math.sqrt(error / (double)(target.length));
     }
-    
-    
 }

@@ -6,6 +6,7 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serial;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -70,8 +71,7 @@ public class MLPGeometry {
         }
         return new double[][][]{input, target};
     }
-    
-    
+
     private static void drawSamples(final Graphics gfx, final int w, final int h, double[][] input, double[][] target) {
         final Graphics2D g = (Graphics2D)gfx;
         g.setRenderingHint(
@@ -115,6 +115,7 @@ public class MLPGeometry {
         final BufferedImage img = new BufferedImage(600, 600, BufferedImage.TYPE_INT_RGB);
         drawSamples(img.getGraphics(), img.getWidth(), img.getHeight(), input, target);
         final JPanel panel = new JPanel() {
+            @Serial
             private static final long serialVersionUID = -4307908552010057652L;
             @Override
             protected void paintComponent(Graphics gfx) {
@@ -137,8 +138,10 @@ public class MLPGeometry {
                 super.afterEpoch(epoch, trainingerror);
 
                 final int ep = epoch + 1;
+                // Flag to save visualizations to file
+                final boolean save_vis  = false;
                 // Only visualize each every step_size frame
-                final int vis_step_size = 5;
+                final int vis_step_size = 50;
                 if (ep % vis_step_size != 0 && ep != 1) return;
 
                 final double[] p = new double[2];
@@ -156,11 +159,14 @@ public class MLPGeometry {
                 }
                 drawSamples(img.getGraphics(), img.getWidth(), img.getHeight(), input, target);
                 double rounded_train_error =  Math.round(trainingerror * 1000.0) / 1000.0;
-                try {
-                    ImageIO.write(img,"png", new File("./gfx/MLPGeometry/" + String.valueOf(ep)+ ".png" ));
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (save_vis){
+                    try {
+                        ImageIO.write(img,"png", new File("./gfx/MLPGeometry/" + ep + ".png" ));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
+
                 frame.setTitle(caption + " after epoch " + ep + ", training-error: " + rounded_train_error);
                 frame.repaint();
             }
