@@ -8,7 +8,7 @@
   <p align="center">
     A project exploring Multilayer Perceptrons (MLP) and Recurrent Neural Networks (RNN) with implementations from scratch in Java.
     <br/>
-    <a href="https://github.com/LuisWinckelmann/JavaDeep-MLP-RNN-from-scratch-in-Java/gfx/MLPGeometry.gif">View Demo</a>
+    <a href="https://github.com/LuisWinckelmann/JavaDeep-MLP-RNN-from-scratch-in-Java/blob/main/gfx/MLPGeometry.gif">View Demo</a>
   </p>
 
 <!-- TABLE OF CONTENTS -->
@@ -86,11 +86,10 @@ Project Link: [https://github.com/LuisWinckelmann/JavaDeep-MLP-RNN-from-scratch-
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [license-shield]: https://img.shields.io/github/license/LuisWinckelmann/JavaDeep-MLP-RNN-from-scratch-in-Java.svg?style=for-the-badge
-[license-url]: https://github.com/LuisWinckelmann/JavaDeep-MLP-RNN-from-scratch-in-Java/blob/master/LICENSE.txt
+[license-url]: https://github.com/LuisWinckelmann/JavaDeep-MLP-RNN-from-scratch-in-Java/blob/main/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/luiswinckelmann
 [product-screenshot]: gfx/MLPGeometry_small.gif
