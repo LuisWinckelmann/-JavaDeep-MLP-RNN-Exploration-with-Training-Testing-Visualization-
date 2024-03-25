@@ -1,0 +1,12 @@
+# IntelliJ & User-specific stuff
+.idea/*
+
+# Gradle and Maven with auto-import
+.idea/modules.xml
+*.iml
+
+# IntelliJ
+out/
+
+# GFX
+/gfx/MLPGeometry/*
