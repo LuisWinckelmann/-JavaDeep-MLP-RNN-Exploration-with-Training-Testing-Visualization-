@@ -7,11 +7,12 @@
 
   <p align="center">
     A project exploring Multilayer Perceptrons (MLP) and Recurrent Neural Networks (RNN) with implementations from scratch in Java.
-    <br/>
+<!---    <br/>
     <a href="https://github.com/LuisWinckelmann/JavaDeep-MLP-RNN-from-scratch-in-Java/blob/main/gfx/MLPGeometry.gif">Demo MLP</a>
-    &
-    <a href="https://github.com/LuisWinckelmann/JavaDeep-MLP-RNN-from-scratch-in-Java/blob/main/gfx/RNNTrajectory.gif">Demo RNN</a>
-  </p>
+   &
+   <a href="https://github.com/LuisWinckelmann/JavaDeep-MLP-RNN-from-scratch-in-Java/blob/main/gfx/RNNTrajectory.gif">Demo RNN</a> 
+-->
+</p>
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -43,7 +44,7 @@ both types of models. To test the functionality of both the MLP & RNN, <a href="
 provided.
 
 
-|Visualization of the MLP each 5 training epochs | Fully trained RNN after 25k training epochs |
+| MLP predictions each 5 epochs during training | Fully trained RNN after 25k training epochs |
 |:-------------------------:|:-------------------------:|
 |[![Example Visualization of the MLP][product-screenshot]](gfx/MLPGeometry_small.gif) | [![Example Visualization of the RNN][product-screenshot2]](gfx/RNNTrajectory_small.gif) |
 
@@ -51,14 +52,14 @@ Corresponding to:
 
 | Binary Classification    | Past-dependent spiral movement|
 |:-------------------------|:-------------------------|
-|The problem simulated is a non-linear classification problem. Over time the MLP learns to separate the background (Class 1, black) from the 2 visible circles (Class 2, white). The model predictions for Class 2 are highlighted in blue every 5 epochs. | The problem simulated is a past-dependent movement in form of a spiral. The fully trained RNN is able to quickly close the gap to the spiral and predict it's future path based on the previous movement. Orange corresponds to the predictions and blue corresponds to the ground truth spiral.|
+|The problem simulated is a non-linear classification problem. Over time the MLP learns to separate the background (Class 1, black) from the 2 visible circles (Class 2, white). The model predictions for Class 2 are highlighted in blue every 5 epochs. | The problem simulated is a past-dependent movement in form of a spiral. The fully trained RNN is able to quickly close the gap to the spiral and predict it's future path based on previous movement. Orange corresponds to the predictions and blue corresponds to the ground truth spiral.|
 
 
 ## Getting Started
 
 ### Prerequisites
 
-All you need to run this project is Java. A [newer version](https://www.oracle.com/java/technologies/downloads/) should work. This project was originally implemented with **SDK 15.0.2.**
+All you need to run this project is Java. This project was originally implemented with **SDK 15.0.2.**, but any [newer version](https://www.oracle.com/java/technologies/downloads/) should also work.
 
 ### Installation
 
@@ -68,11 +69,13 @@ Clone the repo
    ```
 
 ## Classes and Functionality
-- `MultiLayerPerceptron`: Basis for creating MLP of any size with sigmoid activation function. Includes forward pass, backward pass and stochastic gradient decent (SGD) with momentum,
-- `RecurrentNeuralNetwork`: Basis for creating any RNN with tanh activation function. Includes forward pass, backpropagation through time and SGD with momentum.
-- `MLPXOR.java`: Classic XOR toy problem with training and testing.
-- `MLPGeometry.java`: Non-linear binary classification problem (see <a href="#about-the-project">here</a>) with training, testing and visualizations.
-- `RNNTrajectory.java`: Past-dependent toy problem of simulating a spiral movement (see <a href="#about-the-project">here</a>) with training, testing and visualizations.
+- Networks:
+  - `MultiLayerPerceptron`: Basis for creating MLP of any size with sigmoid activation function. Includes forward pass, backward pass and stochastic gradient decent (SGD) with momentum,
+  - `RecurrentNeuralNetwork`: Basis for creating any RNN with tanh activation function. Includes forward pass, backpropagation through time and SGD with momentum.
+- Toy problems:
+  - `MLPXOR.java`: Classic XOR toy problem with training and testing.
+  - `MLPGeometry.java`: Non-linear binary classification problem (see <a href="#about-the-project">here</a>) with training, testing and visualizations.
+  - `RNNTrajectory.java`: Past-dependent toy problem of simulating a spiral movement (see <a href="#about-the-project">here</a>) with training, testing and visualizations.
 
 ## Roadmap
 
