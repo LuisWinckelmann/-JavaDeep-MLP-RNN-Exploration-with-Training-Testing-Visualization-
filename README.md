@@ -40,7 +40,7 @@
 JavaDeep is a project dedicated to exploring Multilayer Perceptrons (MLP) and Recurrent Neural Networks (RNN) core 
 functionalities through a pure Java implementation. To gain a profound understanding of their inner workings, I 
 implemented the forward pass, backward pass (through time), and stochastic gradient descent with a momentum term for 
-both types of models. To test the functionality of both the MLP & RNN, <a href="#usage">three toy problems</a> are 
+both types of models. To test the functionality of both the MLP & RNN, <a href="#classes-and-functionality">three toy problems</a> are 
 provided.
 
 
