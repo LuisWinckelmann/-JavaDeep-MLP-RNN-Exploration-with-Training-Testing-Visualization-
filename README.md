@@ -41,8 +41,9 @@ JavaDeep is a project dedicated to exploring Multilayer Perceptrons (MLP) and Re
 functionalities through a pure Java implementation. To gain a profound understanding of their inner workings, I 
 implemented the forward pass, backward pass (through time), and stochastic gradient descent with a momentum term for 
 both types of models. To test the functionality of both the MLP & RNN, <a href="#classes-and-functionality">three toy problems</a> are 
-provided.
+provided. 
 
+Below, the results on two of the problems are shown:
 
 | MLP predictions each 5 epochs during training | Fully trained RNN after 25k training epochs |
 |:-------------------------:|:-------------------------:|
